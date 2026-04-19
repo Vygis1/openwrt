@@ -1,5 +1,21 @@
 DEVICE_VARS += TPLINK_BOARD_ID
 
+define Device/tplink_deco-m4r-v3
+	$(call Device/FitzImage)
+	DEVICE_VENDOR := TP-Link
+	DEVICE_MODEL := Deco M4R
+	DEVICE_VARIANT := v3
+	SOC := qcom-ipq4019
+	TPLINK_BOARD_ID := DECO-M4R-V3
+	KERNEL_SIZE := 4096k
+	IMAGE_SIZE := 16256k
+	DEVICE_PACKAGES := luci luci-ssl
+	IMAGES += factory.bin
+	IMAGE/factory.bin := append-rootfs | tplink-safeloader factory
+	IMAGE/sysupgrade.bin := append-rootfs | tplink-safeloader sysupgrade | append-metadata
+endef
+TARGET_DEVICES += tplink_deco-m4r-v3
+
 define Device/tplink-deco-m5-common
 	$(call Device/FitzImage)
 	DEVICE_VENDOR := TP-Link

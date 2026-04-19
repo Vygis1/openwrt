@@ -1,0 +1,23 @@
+#!/bin/sh
+
+[ "$(board_name)" = "tplink,deco-m4r-v3" ] || exit 0
+
+# Install U-Boot environment config for this device.
+# APPSBLENV is at mtd7, offset 0, 64KB sector.
+mkdir -p /etc
+cat > /etc/fw_env.config << 'EOF'
+# MTD device name	Device offset	Env. size	Flash sector size
+/dev/mtd7		0x0000		0x10000		0x10000
+EOF
+
+# Set verify=no in U-Boot environment so U-Boot skips FIT hash verification.
+# Required because the OpenWrt kernel FIT is larger than what the stock U-Boot
+# reads by default, causing the DTB to fall outside the loaded region and
+# producing a spurious hash mismatch for 'fdt-1'.
+fw_setenv verify no 2>/dev/null || true
+
+# Set custom bootcmd to load the full 4MB kernel region from the firmware
+# partition at 0x1020000.
+fw_setenv bootcmd "sf probe; sf read 0x84000000 0x1020000 0x400000; bootm 0x84000000" 2>/dev/null || true
+
+exit 0

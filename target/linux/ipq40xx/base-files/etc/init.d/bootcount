@@ -33,6 +33,12 @@ mmc_resetbc() {
 
 boot() {
 	case $(board_name) in
+	tplink,deco-m4r-v3)
+		[ -f /etc/fw_env.config ] || \
+			printf '/dev/mtd7\t0x0000\t0x10000\t0x10000\n' > /etc/fw_env.config
+		fw_setenv verify no 2>/dev/null || true
+		fw_setenv bootcmd "sf probe; sf read 0x84000000 0x1020000 0x400000; bootm 0x84000000" 2>/dev/null || true
+		;;
 	alfa-network,ap120c-ac)
 		[ -n "$(fw_printenv bootcount changed 2>/dev/null)" ] &&\
 			echo -e "bootcount\nchanged\n" | /usr/sbin/fw_setenv -s -
