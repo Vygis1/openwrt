@@ -57,7 +57,7 @@ No UART or disassembly required.
 
 **Steps:**
 
-1. Gain SSH root access using the 1.6.1 exploit (details at [tplink-exploit-repo](https://github.com/sta-c0000/tpconf_bin_xml) or similar).
+1. Gain SSH root access using the exploit at [naf419/tplink_deco_exploits](https://github.com/naf419/tplink_deco_exploits/tree/main/userspace_fw_upgrade).
 
 2. Copy the files to the router:
    ```sh
