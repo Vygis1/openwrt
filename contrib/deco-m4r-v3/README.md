@@ -15,8 +15,7 @@ Pre-built firmware images are available in [Releases](../../releases).
 | Flash | 32 MB SPI NOR |
 | WiFi 2.4 GHz | IPQ4019 integrated (2×2, 802.11n) |
 | WiFi 5 GHz | IPQ4019 integrated (2×2, 802.11ac) |
-| Ethernet | 2× (1× LAN, 1× WAN via QCA8075 PSGMII PHY) |
-| USB | 1× USB 3.0 |
+| Ethernet | 2× (1× LAN, 1× WAN via IPQ4019 internal ESS switch) |
 | LEDs | Red / Green / Blue (GPIO) |
 | Reset button | GPIO 18 (hold 10 s to reset) |
 | UART | 3.3 V, 115200 8N1 |
