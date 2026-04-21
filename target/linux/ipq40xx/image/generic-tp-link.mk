@@ -9,6 +9,7 @@ define Device/tplink_deco-m4r-v3
 	TPLINK_BOARD_ID := DECO-M4R-V3
 	KERNEL_SIZE := 4096k
 	IMAGE_SIZE := 16256k
+	DEVICE_COMPAT_VERSION := 1.0
 	DEVICE_PACKAGES := luci luci-ssl kmod-wireguard wireguard-tools luci-proto-wireguard
 	IMAGES += factory.bin
 	IMAGE/factory.bin := append-rootfs | tplink-safeloader factory
