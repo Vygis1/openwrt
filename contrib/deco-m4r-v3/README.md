@@ -71,7 +71,7 @@ No UART or disassembly required.
    /tmp/flash-openwrt-from-stock.sh /tmp/openwrt-ipq40xx-generic-tplink_deco-m4r-v3-squashfs-sysupgrade.bin
    ```
 
-4. The script will validate, flash, and print `Done. You can now reboot.`. Unplug and replug power.
+4. The script will validate, flash, and print `=== DONE ===`. Unplug and replug power.
 
 5. OpenWrt boots. LuCI web interface is at **http://192.168.1.1**. No password is set by default — set one immediately.
 
@@ -119,21 +119,17 @@ Use this if you bricked the device or can't use Method 1.
 
 ## Upgrading OpenWrt
 
-**First upgrade** (from stock or an earlier build without DSA metadata):
+**Via LuCI** (recommended): Go to **System → Backup / Flash Firmware → Flash new firmware**, upload `sysupgrade.bin`, uncheck "Keep settings", and flash.
+
+**Via SSH:**
 
 ```sh
-sysupgrade -F -n /tmp/openwrt-...-squashfs-sysupgrade.bin
-```
-
-The `-F` flag is required for the first upgrade because our image carries `compat_version: 1.1` (DSA network switch migration marker) while the previous environment has `1.0`. Subsequent OpenWrt-to-OpenWrt upgrades do not need `-F`.
-
-**Subsequent upgrades** (OpenWrt → OpenWrt):
-
-```sh
+scp -O openwrt-...-squashfs-sysupgrade.bin root@192.168.1.1:/tmp/
+ssh root@192.168.1.1
 sysupgrade -n /tmp/openwrt-...-squashfs-sysupgrade.bin
 ```
 
-Use `-n` to discard settings (recommended for major version jumps). Omit `-n` to keep settings.
+> **Note for v1.0.0 / v1.1.0 users:** Those releases had an incorrect `compat_version` that causes LuCI to silently reject upgrades. Use SSH with `sysupgrade -F -n` for this one transition. All upgrades from v1.1.1 onwards work normally via LuCI.
 
 ---
 
